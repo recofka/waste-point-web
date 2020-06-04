@@ -1,11 +1,12 @@
 import React from 'react';
-import Header from './Header';
 import './App.css';
+
+import Home from './pages/Home/index';
 
 function App() {
   return (
     <div>
-      <Header title={"Hello Word"}/>
+     <Home />
       
     </div>
   );
