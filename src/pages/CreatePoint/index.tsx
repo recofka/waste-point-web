@@ -1,11 +1,10 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import logo from '../../assets/logo.svg';
 import api from '../../services/api';
-
 import './styles.css';
 
 interface Item {
@@ -27,6 +26,8 @@ const CreatePoint = () => {
     const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
+    const history = useHistory();
+
     useEffect(() => {
         api.get('items').then(response => {
             setItems(response.data);
@@ -42,6 +43,7 @@ const CreatePoint = () => {
 
     function handleSelectNbhd(event: ChangeEvent<HTMLSelectElement>) {
         const neighborhood = event.target.value;
+
         setSelectedNbhd(neighborhood);
     }
 
@@ -54,6 +56,7 @@ const CreatePoint = () => {
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
+
         setFormData({ ...formData, [name]: value });
     }
 
@@ -62,7 +65,7 @@ const CreatePoint = () => {
 
         if (alredySelected > 0) {
             const filteredItems = selectedItems.filter(item => item !== id);
-            setSelectedItems(filteredItems)
+            setSelectedItems(filteredItems);
         } else {
             setSelectedItems([...selectedItems, id]);
         }
@@ -84,6 +87,7 @@ const CreatePoint = () => {
             items
         };
         await api.post('points', data);
+        history.push('/success-create-point');
     };
 
     return (
