@@ -87,7 +87,7 @@ const CreatePoint = () => {
             items
         };
         await api.post('points', data);
-        history.push('/success-create-point');
+        history.push('/create-point-sucess');
     };
 
     return (
