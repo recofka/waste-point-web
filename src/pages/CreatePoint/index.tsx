@@ -1,4 +1,5 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import Dropzone from '../../components/Dropzone';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
@@ -25,6 +26,7 @@ const CreatePoint = () => {
     const [selectedNbhd, setSelectedNbhd] = useState('0');
     const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [selectedFile, setSelectedFile] = useState<File>();
 
     const history = useHistory();
 
@@ -74,18 +76,24 @@ const CreatePoint = () => {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
+
         const { name, email } = formData;
         const city = selectedNbhd;
         const [latitude, longitude] = selectedPosition;
         const items = selectedItems;
-        const data = {
-            name,
-            email,
-            latitude,
-            longitude,
-            city,
-            items
-        };
+
+        const data = new FormData();
+        data.append('name', name);
+        data.append('email', email);
+        data.append('latitude', String(latitude));
+        data.append('longitude', String(longitude));
+        data.append('city', city);
+        data.append('items', items.join(','));
+
+        if (selectedFile) {
+            data.append('image', selectedFile);
+        }
+
         await api.post('points', data);
         history.push('/create-point-sucess');
     };
@@ -102,6 +110,8 @@ const CreatePoint = () => {
 
             <form onSubmit={handleSubmit}>
                 <h1>Register a <br /> collection point</h1>
+
+                <Dropzone onFileUploaded={setSelectedFile} />
 
                 <fieldset>
                     <legend>
