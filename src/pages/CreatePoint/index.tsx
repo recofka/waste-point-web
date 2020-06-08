@@ -73,6 +73,7 @@ const CreatePoint = () => {
         }
 
     };
+    
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -97,6 +98,7 @@ const CreatePoint = () => {
         await api.post('points', data);
         history.push('/create-point-sucess');
     };
+    
 
     return (
         <div id="page-create-point">
@@ -125,6 +127,7 @@ const CreatePoint = () => {
                         type="text"
                         name="name"
                         id="name"
+                        required
                         onChange={handleInputChange}
                     />
                 </div>
