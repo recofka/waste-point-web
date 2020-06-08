@@ -73,12 +73,13 @@ const CreatePoint = () => {
         }
 
     };
+    
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
         const { name, email } = formData;
-        const city = selectedNbhd;
+        const neighborhood = selectedNbhd;
         const [latitude, longitude] = selectedPosition;
         const items = selectedItems;
 
@@ -87,7 +88,7 @@ const CreatePoint = () => {
         data.append('email', email);
         data.append('latitude', String(latitude));
         data.append('longitude', String(longitude));
-        data.append('city', city);
+        data.append('neighborhood', neighborhood);
         data.append('items', items.join(','));
 
         if (selectedFile) {
@@ -97,6 +98,7 @@ const CreatePoint = () => {
         await api.post('points', data);
         history.push('/create-point-sucess');
     };
+    
 
     return (
         <div id="page-create-point">
@@ -125,6 +127,7 @@ const CreatePoint = () => {
                         type="text"
                         name="name"
                         id="name"
+                        required
                         onChange={handleInputChange}
                     />
                 </div>
@@ -156,10 +159,10 @@ const CreatePoint = () => {
 
                 <div className="fiel-group">
                     <div className="field">
-                        <label htmlFor="city">Neighborhood</label>
+                        <label htmlFor="neighborhood">Neighborhood</label>
                         <select
-                            name="city"
-                            id="city"
+                            name="neighborhood"
+                            id="neighborhood"
                             onChange={handleSelectNbhd}
                             value={selectedNbhd}>
 
