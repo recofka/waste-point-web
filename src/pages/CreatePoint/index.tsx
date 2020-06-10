@@ -142,6 +142,8 @@ const CreatePoint = () => {
                         </legend>
                     </fieldset>
 
+
+
                     <Map center={initialPosition} zoom={15} onClick={handleMapClick}>
                         <TileLayer
                             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -177,7 +179,7 @@ const CreatePoint = () => {
                                 <li
                                     key={item.id}
                                     onClick={() => handleSelectItem(item.id)}
-                                    className={selectedItems.includes(item.id) ? 'selected' : ''}
+                                    className={selectedItems.includes(item.id) ? 'selected' : 'non-selected'}
                                 >
                                     <img src={item.image_url} alt={item.title} />
                                     <span>{item.title}</span>
